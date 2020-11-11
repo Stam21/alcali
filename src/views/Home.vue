@@ -21,13 +21,17 @@
         <JobsTable :filter="{limit: 10}"></JobsTable>
       </v-col>
     </v-row>
-
+    
+    <v-col >
+      <OSChartCard></OSChartCard>
+    </v-col>
   </v-container>
 </template>
 
 <script>
   // @ is an alias to /src
 
+  import OSChartCard from "../components/OSChartCard"
   import KeysStatusCard from "../components/KeysStatusCard"
   import JobsChartCard from "../components/JobsChartCard"
   import AlcaliStatusCard from "../components/AlcaliStatusCard"
@@ -42,6 +46,7 @@
       AlcaliStatusCard,
       KeysStatusCard,
       JobsChartCard,
+      OSChartCard
     },
   }
 </script>

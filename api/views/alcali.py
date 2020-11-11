@@ -366,6 +366,20 @@ def jobs_graph(request):
     days, count, error_count = graph_data(**params)
     return Response({"labels": days, "series": [count, error_count]})
 
+@api_view(["GET"])
+def os_graph(request):
+    
+    labels = []
+    queryset = Minions.objects.filter(grain__icontains="os")
+    for query in queryset:
+        labels.add(query)
+       
+    c = Counter(labels)
+    for x in set(labels): 
+        data.append(c[x])
+
+    return Response({"labels": set(labels), "series": data}) 
+
 
 @api_view(["POST"])
 def parse_modules(request):

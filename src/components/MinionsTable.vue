@@ -53,20 +53,20 @@
           class="elevation-1"
           :loading="loading" loading-text="Loading... Please wait"
       >
-        <template v-slot:item.minion_id="{ item }">
+        <template v-slot:[`item.minion_id`]="{ item }">
           <v-btn text small class="text-none" :to="'/minions/'+item.minion_id">{{ item.minion_id }}</v-btn>
         </template>
-        <template v-slot:item.conformity="{ item }">
+        <template v-slot:[`item.conformity`]="{ item }">
           <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity }}
           </v-chip>
         </template>
-        <template v-slot:item.last_job="{ item }">
+        <template v-slot:[`item.last_job`]="{ item }">
           {{item.last_job === null ? "": new Date(item.last_job).toLocaleString("en-GB")}}
         </template>
-        <template v-slot:item.last_highstate="{ item }">
+        <template v-slot:[`item.last_highstate`]="{ item }">
           {{item.last_highstate === null ? "": new Date(item.last_highstate).toLocaleString("en-GB")}}
         </template>
-        <template v-slot:item.action="{ item }">
+        <template v-slot:[`item.action`]="{ item }">
           <div class="text-center">
             <v-btn
                 small

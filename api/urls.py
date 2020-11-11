@@ -16,6 +16,7 @@ from api.views.alcali import (
     index_view,
     KeysViewSet,
     MinionsViewSet,
+    os_graph,
     jobs_graph,
     stats,
     event_stream,
@@ -73,6 +74,7 @@ urlpatterns = [
         name="jobs-detail-rendered",
     ),
     path("api/jobs/graph", jobs_graph, name="jobs_graph"),
+    path("api/os/graph", os_graph, name="os_graph"),
 ]
 
 if os.environ.get("SALT_AUTH") == "rest":
