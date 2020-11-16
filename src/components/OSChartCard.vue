@@ -1,56 +1,90 @@
 <template>
   <v-container fluid>
     <v-card :elevation="minion == null ? 2 : 0">
-      <canvas id=doughnut-chart ref="chart2"></canvas>
+      <v-list-item three-line dense>
+        <v-list-item-content>
+          <v-list-item-title class="headline mb-1">Jobs Stats</v-list-item-title>
+        </v-list-item-content>
+        <v-spacer></v-spacer>
+        
+
+      </v-list-item>
+      <canvas ref="chart"></canvas>
     </v-card>
   </v-container>
 </template>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
-
 <script>
-  import Line from 'vue-chartjs'
-
+  import Chart from "chart.js"
+  import { Doughnut } from 'vue-chartjs'
+  
   export default {
-    components: {
-      Line
-    },
-    data () {
+    extend: Doughnut,
+    name: "OSChartCard",
+    props: ["minion"],
+    data() {
       return {
-        datacollection: null
+      
+        jobchart: null,
+        labels: null,
+        chart_data: [],
       }
     },
-    mounted () {
-      this.fillData()
+    mounted() {
+      this.createChart()
     },
     methods: {
-      fillData () {
-        this.datacollection = {
-          labels: [this.getRandomInt(), this.getRandomInt()],
-          datasets: [
-            {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }, {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }
-          ]
+      loadData() {
+        let params = { params: {  } }
+        if (this.minion) {
+          params.params.id = this.minion
         }
+        this.$http.get("api/jobs/graph", params).then(response => {
+          this.jobchart.data.labels = response.data.labels
+          this.jobchart.data.data = response.data.series
+          this.jobchart.update()
+        })
       },
-      getRandomInt () {
-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-      }
-    }
+      createChart() {
+
+        let params = { params: { } }
+        if (this.minion) {
+          params.params.id = this.minion
+        }
+        if (this.jobchart != null) {
+          this.jobchart.destroy()
+        }
+        this.$http.get("api/jobs/graph", params).then(response => {
+          this.labels = response.data.labels
+          this.chart_data = response.data.series
+          this.$refs.chart.height = 60
+          this.jobchart = new Chart(this.$refs.chart, {
+            type: "doughnut",
+            data: {
+              message: this.labels,
+              labels: this.labels,
+              datasets: [{
+                lineTension: 0.1,
+                pointRadius: 1,
+                data: this.chart_data, // fake data before update(needed for plugin).
+                fill: false,
+                colorStart: "rgba(0, 173, 238, 1.0)",
+                colorEnd: "rgba(231, 18, 143, 1.0)",
+              },]
+            },
+            options: {
+              legend: {
+                display: true
+              },
+              responsive: true,
+            }
+          })
+        })
+      },
+    },
   }
 </script>
 
-<style>
-  .small {
-    max-width: 600px;
-    margin:  150px auto;
-  }
+<style scoped>
+
 </style>

@@ -74,6 +74,7 @@ urlpatterns = [
         name="jobs-detail-rendered",
     ),
     path("api/jobs/graph", jobs_graph, name="jobs_graph"),
+    path("api/os/", SaltReturnsList.as_view(), name="os-list"),
     path("api/os/graph", os_graph, name="os_graph"),
 ]
 

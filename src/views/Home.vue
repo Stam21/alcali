@@ -21,10 +21,12 @@
         <JobsTable :filter="{limit: 10}"></JobsTable>
       </v-col>
     </v-row>
-    
-    <v-col >
-      <OSChartCard></OSChartCard>
-    </v-col>
+    <v-row>
+      <v-col >
+        <OSChartCard></OSChartCard>
+      </v-col>
+    </v-row>
+ 
   </v-container>
 </template>
 
@@ -46,7 +48,7 @@
       AlcaliStatusCard,
       KeysStatusCard,
       JobsChartCard,
-      OSChartCard
+      OSChartCard,
     },
   }
 </script>

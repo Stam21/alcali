@@ -37,9 +37,9 @@ if DJANGO_DEBUG:
         DJANGO_DEBUG = strtobool(DJANGO_DEBUG)
     # None, empty, bool...
     except (AttributeError, TypeError, ValueError):
-        DJANGO_DEBUG = False
+        DJANGO_DEBUG = True
 else:
-    DJANGO_DEBUG = False
+    DJANGO_DEBUG = True
 DEBUG = DJANGO_DEBUG
 
 ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS", "127.0.0.1")]
@@ -134,7 +134,7 @@ STATICFILES_DIRS = []
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ],

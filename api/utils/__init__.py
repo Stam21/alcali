@@ -1,5 +1,5 @@
 from collections import Counter
-
+import re 
 # from difflib import SequenceMatcher
 from datetime import timedelta
 
@@ -92,6 +92,23 @@ def graph_data(period=7, **kwargs):
             error_count.insert(idx, 0)
 
     return days, count, error_count
+
+def os_data() : 
+    labels=[]
+    datat=[]
+    minions_all = Minions.objects.all()
+
+    grains = {minion.grain: [] for minion in minions_all}
+    
+    grains = str(grains).replace('[\]','').strip()
+    for key in grains:
+        labels.append(key)
+
+    c = Counter(labels)
+    for y in c :
+        datat.append(c[y]) 
+
+    return labels, datat
 
 
 def render_conformity(target=None):
