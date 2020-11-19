@@ -1,5 +1,7 @@
 from collections import Counter
-import re 
+import ast
+import re
+import json
 # from difflib import SequenceMatcher
 from datetime import timedelta
 
@@ -98,18 +100,45 @@ def os_data() :
     datat=[]
     minions_all = Minions.objects.all()
 
-    grains = {minion.grain: [] for minion in minions_all}
-    
-    grains = str(grains).replace('[\]','').strip()
-    for key in grains:
-        labels.append(key)
+    for minion in minions_all: 
+        
+        new_clear = minion.grain
+        json2 = json.loads(new_clear)
+        #new_clear = ''.join(map(str, new_clear))
+        #data = ast.literal_eval(new_clear)
+        
+
+    for y in minions_all:
+        #json_string = json.dumps(key)
+        #new_clear = json_string.replace("\\", "")
+        #json_data = json.loads(new_clear)
+        #labels.append(json_data)
+        #data= y.replace("\\", "")
+        labels.append(json2['os'])
+    c = Counter(labels)
+    for key in c :
+        datat.append(c[key]) 
+
+    return set(labels) , datat
+
+def vs_data() : 
+    labels= []
+    datat = []
+    minions_all = Minions.objects.all()
+    for minion in minions_all: 
+        
+        new_clear = minion.grain
+        json2 = json.loads(new_clear)
+
+    for y in minions_all: 
+        temp = json2['lsb_distrib_description']
+        labels.append(temp.replace('(stretch)','').strip())
 
     c = Counter(labels)
-    for y in c :
-        datat.append(c[y]) 
-
-    return labels, datat
-
+    for key in c :
+        datat.append(c[key])
+    
+    return set(labels) , datat
 
 def render_conformity(target=None):
 

@@ -51,7 +51,7 @@ from api.serializers import (
     JobTemplateSerializer,
 )
 from api.serializers import KeysSerializer, MinionsSerializer
-from api.utils import os_data, graph_data, render_conformity, RawCommand
+from api.utils import vs_data,os_data, graph_data, render_conformity, RawCommand
 from api.utils.output import highstate_output, nested_output
 
 # Serve Vue Application
@@ -369,9 +369,16 @@ def jobs_graph(request):
 @api_view(["GET"])
 def os_graph(request):
       
-        labels , data = os_data()
+    labels , data = os_data()
         
-        return Response({"labels": labels, "series": data}) 
+    return Response({"labels": labels, "series": data}) 
+
+@api_view(["GET"])
+def vs_graph(request):
+      
+    labels , data = vs_data()
+        
+    return Response({"labels": labels, "series": data}) 
 
 
 @api_view(["POST"])

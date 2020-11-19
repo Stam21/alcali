@@ -12,18 +12,18 @@
       </v-col>
     </v-row>
     <v-row>
+      <v-col>
+        <OSChartCard></OSChartCard>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col lg="12">
-        <JobsChartCard></JobsChartCard>
+        <VSChartCard></VSChartCard>
       </v-col>
     </v-row>
     <v-row>
       <v-col lg="12">
         <JobsTable :filter="{limit: 10}"></JobsTable>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col >
-        <OSChartCard></OSChartCard>
       </v-col>
     </v-row>
  
@@ -35,10 +35,10 @@
 
   import OSChartCard from "../components/OSChartCard"
   import KeysStatusCard from "../components/KeysStatusCard"
-  import JobsChartCard from "../components/JobsChartCard"
   import AlcaliStatusCard from "../components/AlcaliStatusCard"
   import ConformityChart from "../components/ConformityChart"
   import JobsTable from "../components/JobsTable"
+  import VSChartCard from "../components/VSChartCard"
 
   export default {
     name: "home",
@@ -47,8 +47,8 @@
       ConformityChart,
       AlcaliStatusCard,
       KeysStatusCard,
-      JobsChartCard,
       OSChartCard,
+      VSChartCard,
     },
   }
 </script>

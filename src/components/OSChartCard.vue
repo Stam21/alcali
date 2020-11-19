@@ -1,16 +1,8 @@
 <template>
   <v-container fluid>
-    <v-card :elevation="minion == null ? 2 : 0">
-      <v-list-item three-line dense>
-        <v-list-item-content>
-          <v-list-item-title class="headline mb-1">Jobs Stats</v-list-item-title>
-        </v-list-item-content>
-        <v-spacer></v-spacer>
-        
-
-      </v-list-item>
+   
       <canvas ref="chart"></canvas>
-    </v-card>
+    
   </v-container>
 </template>
 
@@ -39,7 +31,7 @@
         if (this.minion) {
           params.params.id = this.minion
         }
-        this.$http.get("api/jobs/graph", params).then(response => {
+        this.$http.get("api/os/graph", params).then(response => {
           this.jobchart.data.labels = response.data.labels
           this.jobchart.data.data = response.data.series
           this.jobchart.update()
@@ -54,7 +46,7 @@
         if (this.jobchart != null) {
           this.jobchart.destroy()
         }
-        this.$http.get("api/jobs/graph", params).then(response => {
+        this.$http.get("api/os/graph", params).then(response => {
           this.labels = response.data.labels
           this.chart_data = response.data.series
           this.$refs.chart.height = 60
